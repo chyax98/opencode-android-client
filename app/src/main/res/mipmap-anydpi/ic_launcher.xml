@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  自适应图标：底板是深色径向渐变，前景是官方标识（白框 + 灰块）。
+  minSdk 26 起只认这一套，所以没有 mipmap 里的位图版本。
+-->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+    <monochrome android:drawable="@drawable/ic_launcher_monochrome" />
+</adaptive-icon>

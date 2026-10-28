@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 启动器静态快捷方式：多实例的切换入口。长按桌面图标即可看到。 -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:shortcutId="servers"
+        android:shortcutLongLabel="@string/shortcut_servers_long"
+        android:shortcutShortLabel="@string/shortcut_servers">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="io.github.chyax98.opencodeclient.MainActivity"
+            android:targetPackage="io.github.chyax98.opencodeclient">
+            <extra
+                android:name="screen"
+                android:value="servers" />
+        </intent>
+    </shortcut>
+</shortcuts>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--
+      全屏 WebView 壳：
+      - 不要 ActionBar：targetSdk 35 起强制 edge-to-edge，系统那条 ActionBar 会盖在 Web UI
+        自己的标题栏上（Web UI 是全屏自绘的），既不显示对的东西，又白占一条触摸区。
+      - 壳底色跟着系统深浅色走（见 values-night/colors.xml）。
+      - colorPrimary 用 token 里的 accent（焦点描边、文本光标、选中态都是它）；
+        主按钮那种"实心深底"由代码显式给 brand_primary，不靠主题默认值。
+    -->
+    <style name="Theme.OpenCodeClient" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/shell_background</item>
+        <item name="android:colorBackground">@color/shell_background</item>
+        <!-- 亮色底 → 系统栏图标用深色。深色那套在 values-night/themes.xml 里改回 false。 -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        <!-- windowLightNavigationBar 是 API 27 才有的属性；minSdk 26 上系统会忽略它，
+             用 tools:targetApi 只是告诉 lint 这是有意为之（不要在 26 上改导航栏图标颜色）。 -->
+        <item name="colorPrimary">@color/shell_accent</item>
+        <item name="colorOnPrimary">@color/brand_on_primary</item>
+        <item name="colorError">@color/shell_status</item>
+        <!--
+          那些"没人显式设过"的 Material 默认槽位：对话框底、菜单底、onSurface 文字、描边……
+          M3 的默认值是**基线紫灰**（colorSurfaceContainerHigh #ECE6F0 那种），只改 colors.xml
+          是查不出来的 —— 不改这里，改名弹窗/预览面板/⋮ 菜单就会露出基线色。
+        -->
+        <item name="colorSurface">@color/shell_card</item>
+        <item name="colorSurfaceVariant">@color/shell_layer</item>
+        <item name="colorSurfaceContainer">@color/shell_card</item>
+        <item name="colorSurfaceContainerLow">@color/shell_card</item>
+        <item name="colorSurfaceContainerHigh">@color/shell_card</item>
+        <item name="colorOnSurface">@color/shell_text</item>
+        <item name="colorOnSurfaceVariant">@color/shell_text_muted</item>
+        <item name="colorOutline">@color/shell_border</item>
+        <item name="colorOutlineVariant">@color/shell_border_muted</item>
+        <!--
+          设计系统的"形状"这一层：Material3 默认的按钮是**全圆药丸**（圆角 = 高度的一半），
+          和 opencode 那套（radius-md 6px 的圆角矩形）不是一回事 —— 看着就"没包过"。
+          三档形状统一压到 token 的 6dp，按钮、输入框、卡片、对话框才是一套东西。
+        -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.OpenCodeClient</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.OpenCodeClient</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.OpenCodeClient</item>
+        <item name="materialButtonStyle">@style/Widget.OpenCodeClient.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.OpenCodeClient.Button.Outlined</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.OpenCodeClient.MaterialAlertDialog</item>
+        <!-- 关掉 Material 的"海拔染色"：它会给对话框/浮层叠一层主色（真机采样 #EBEDFC，
+             而卡片是纯白 #FFFFFF）—— 上游的浮层是纯 token 底色，不叠这层。 -->
+        <item name="elevationOverlayEnabled">false</item>
+    </style>
+
+    <style name="ShapeAppearance.OpenCodeClient" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/shell_card_radius</item>
+    </style>
+    <!--
+      M3 把按钮的形状写死在它自己的 style 里（`ShapeAppearance.Material3.Corner.Full` = 胶囊），对话框也一样
+      （28dp）—— 所以光改 `shapeAppearance*Component` 压不住它们（真机上验证过：连接按钮还是黑的胶囊）。
+      得用 overlay 从上面盖一层：只在 overlay 里写 cornerSize，基础形状会被替换掉。
+    -->
+    <style name="ShapeOverlay.OpenCodeClient" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/shell_card_radius</item>
+    </style>
+
+    <style name="Widget.OpenCodeClient.Button" parent="Widget.Material3.Button">
+        <item name="shapeAppearanceOverlay">@style/ShapeOverlay.OpenCodeClient</item>
+    </style>
+
+    <style name="Widget.OpenCodeClient.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="shapeAppearanceOverlay">@style/ShapeOverlay.OpenCodeClient</item>
+    </style>
+
+    <style name="ThemeOverlay.OpenCodeClient.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.OpenCodeClient</item>
+    </style>
+
+    <style name="MaterialAlertDialog.OpenCodeClient" parent="MaterialAlertDialog.Material3">
+        <!-- Material 1.12 在 MaterialAlertDialog.Material3 里把 shapeAppearance 写死成 28dp，
+             overlay 赢不了它（真机量过：还是 ~12dp）—— 得直接换掉 shapeAppearance。 -->
+        <item name="shapeAppearance">@style/ShapeAppearance.OpenCodeClient</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeOverlay.OpenCodeClient</item>
+        <!-- 底色也得自己罩：M3 把 backgroundTint 写成了宏常量（基线 #ECE6F0 那种紫白），
+             改主题的 colorSurfaceContainerHigh 对它无效（真机采样：#EBEDFC vs 卡片 #FFFFFF）。 -->
+        <item name="backgroundTint">@color/shell_card</item>
+    </style>
+
+</resources>

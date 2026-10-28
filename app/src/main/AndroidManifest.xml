@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 换网络（Wi-Fi ↔ 蜂窝）后让页面重新订阅一次事件流：只读默认网络的变化，不发任何请求。 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- CAMERA 权限隐含"必须有摄像头"，不声明 required=false 的话没摄像头的设备（Chromebook/TV/车机）
+         在 Play 上直接装不了。扫码本来就是可选的（还能粘贴链接）。 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <!-- 自适应图标（opencode 官方图）从 API 26 起才有，所以 minSdk 就定在 26。 -->
+    <!-- enableOnBackInvokedCallback 是 API 33 才认的属性（26–32 会忽略，行为由 onBackPressed 保证）；
+         allowBackup=false 已经等于"不备份"，不需要再写 dataExtractionRules。 -->
+    <application
+        android:name=".ShellApplication"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/Theme.OpenCodeClient"
+        android:enableOnBackInvokedCallback="false"
+        tools:ignore="UnusedAttribute,DataExtractionRules"
+        android:allowBackup="false"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustNothing"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|uiMode|density">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 长按桌面图标 → 切换服务器（多实例的入口，不占 Web UI 的屏幕空间）。 -->
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity>
+
+        <!-- 扫码页：用库自己的主题，方向改成跟随设备（库默认写死横屏）。
+             固定方向是 lint 的 DiscouragedApi，但这里就是要覆盖库的 sensorLandscape。 -->
+        <activity
+            android:name=".ScannerActivity"
+            android:exported="false"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            tools:ignore="DiscouragedApi"
+            android:theme="@style/zxing_CaptureTheme" />
+    </application>
+
+</manifest>

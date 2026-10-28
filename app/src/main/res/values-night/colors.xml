@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 深色那一套（同一个 token 的深色值，见 docs/design.md）。 -->
+    <color name="shell_background">#FF080808</color>
+    <color name="shell_card">#FF161616</color>
+    <color name="shell_layer">#FF2E2E2E</color>
+
+    <color name="shell_text">#FFFAFAFA</color>
+    <color name="shell_text_muted">#FFAEAEAE</color>
+    <color name="shell_status">#FFF17471</color>
+    <color name="shell_accent">#FFA2BCFF</color>
+
+    <color name="shell_border">#1AFFFFFF</color>
+    <color name="shell_border_muted">#14FFFFFF</color>
+
+    <color name="brand_primary">#FF5C5C5C</color>
+
+    <!-- 深色页面的底就是 #080808：球的圆盘再用它就跟页面融成一块了（白字形悬空在飘）。 -->
+    <color name="icon_background">#FF242424</color>
+    <color name="brand_on_primary">#FFFFFFFF</color>
+</resources>

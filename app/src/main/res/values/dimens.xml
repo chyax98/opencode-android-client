@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      壳自己的尺寸 = opencode 的设计 token（见 docs/design.md）：
+      radius-md 0.375rem = 6px（按钮/输入框/卡片/对话框/菜单全线都是它，见 button.css、card.css、
+      text-input.css、dialog.css、context-menu.css）、连接屏页边距 24 / 控件高 44
+      （packages/app/src/servers/connect/screen.css）。
+      字号的 token（small 13 / base 14 / large 16 / x-large 20）在代码里直接写 sp，量少、就地可读。
+    -->
+    <dimen name="shell_card_radius">6dp</dimen>
+    <dimen name="shell_page_padding">24dp</dimen>
+    <dimen name="shell_control_height">44dp</dimen>
+</resources>

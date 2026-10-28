@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      壳自己的颜色 = opencode 的 v2 设计 token（亮色这一套；深色在 values-night/colors.xml）。
+      来源与映射见 docs/design.md；token 原文在 opencode 的
+      packages/ui/src/styles/tokens/{theme,colors}.css。改值时连 docs/design.md 里记的 token 一起改，别单改一处。
+
+      规则：资源名保持 shell_* / brand_*，注释里保留对应的 token 名，方便回头核对。
+    -->
+    <!-- v2-background-bg-deep -->
+    <color name="shell_background">#FFFAFAFA</color>
+    <!-- v2-background-bg-base -->
+    <color name="shell_card">#FFFFFFFF</color>
+    <!-- v2-background-bg-layer-02（chip / 次级块；light 的 layer-01=grey-100 和页面底同色，看不见） -->
+    <color name="shell_layer">#FFF2F2F2</color>
+
+    <!-- v2-text-text-base / muted -->
+    <color name="shell_text">#FF161616</color>
+    <color name="shell_text_muted">#FF5C5C5C</color>
+    <!-- v2-state-fg-danger -->
+    <color name="shell_status">#FFB82D35</color>
+    <!-- v2-text-text-accent -->
+    <color name="shell_accent">#FF3B5CF6</color>
+
+    <!-- v2-border-border-base / muted -->
+    <color name="shell_border">#1A000000</color>
+    <color name="shell_border_muted">#14000000</color>
+
+    <!-- v2-background-bg-contrast + text-contrast：主按钮（v2 的 contrast 变体，和上游连接屏同款） -->
+    <color name="brand_primary">#FF242424</color>
+    <color name="brand_on_primary">#FFFFFFFF</color>
+
+    <!-- 图标底板固定深色：前景标识（官方 logo）本身就是浅色的，跟着系统变就没法看了。 -->
+    <color name="icon_background">#FF080808</color>
+</resources>

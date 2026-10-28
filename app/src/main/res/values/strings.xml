@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 启动器里显示的名字。别写成"OpenCode"，那是上游产品的名字，这个只是它的客户端。 -->
+    <string name="app_name">OpenCode Client</string>
+    <!-- 启动器快捷方式的文案。AAPT 要求这两个属性是字符串引用，不能内联。 -->
+    <string name="shortcut_servers">切换服务器</string>
+    <string name="shortcut_servers_long">已连接的服务器</string>
+</resources>

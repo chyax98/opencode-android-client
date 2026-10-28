@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- 深色模式：深底 + 浅色系统栏图标（accent 也跟着换，见 values-night/colors.xml）。 -->
+    <style name="Theme.OpenCodeClient" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/shell_background</item>
+        <item name="android:colorBackground">@color/shell_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+        <!-- windowLightNavigationBar 是 API 27 才有的属性；minSdk 26 上系统会忽略它，
+             用 tools:targetApi 只是告诉 lint 这是有意为之（不要在 26 上改导航栏图标颜色）。 -->
+        <item name="colorPrimary">@color/shell_accent</item>
+        <!-- 深色的 accent 是浅蓝 blue-400：白字压上去只有 1.9:1，得用深色字。 -->
+        <item name="colorOnPrimary">#FF161616</item>
+        <item name="colorError">@color/shell_status</item>
+        <item name="colorSurface">@color/shell_card</item>
+        <item name="colorSurfaceVariant">@color/shell_layer</item>
+        <item name="colorSurfaceContainer">@color/shell_card</item>
+        <item name="colorSurfaceContainerLow">@color/shell_card</item>
+        <item name="colorSurfaceContainerHigh">@color/shell_card</item>
+        <item name="colorOnSurface">@color/shell_text</item>
+        <item name="colorOnSurfaceVariant">@color/shell_text_muted</item>
+        <item name="colorOutline">@color/shell_border</item>
+        <item name="colorOutlineVariant">@color/shell_border_muted</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.OpenCodeClient</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.OpenCodeClient</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.OpenCodeClient</item>
+        <item name="materialButtonStyle">@style/Widget.OpenCodeClient.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.OpenCodeClient.Button.Outlined</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.OpenCodeClient.MaterialAlertDialog</item>
+        <!-- 关掉 Material 的"海拔染色"：它会给对话框/浮层叠一层主色（真机采样 #EBEDFC，
+             而卡片是纯白 #FFFFFF）—— 上游的浮层是纯 token 底色，不叠这层。 -->
+        <item name="elevationOverlayEnabled">false</item>
+    </style>
+
+    <style name="ShapeAppearance.OpenCodeClient" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/shell_card_radius</item>
+    </style>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  官方标识（opencode/packages/identity/mark.svg：深底板 + 灰块 + 白色方框），底板改成圆角。
+  连接页顶部那 72dp 的 logo 用这个 —— 原版是直角矩形，放在浅色页面上像贴了一张截图；
+  圆角和启动器图标的观感对齐。底板颜色固定，前景是浅色，不要跟着深浅色变。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="72dp"
+    android:height="72dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <path
+        android:fillColor="#FF131010"
+        android:pathData="M96,0H416A96,96 0 0 1 512,96V416A96,96 0 0 1 416,512H96A96,96 0 0 1 0,416V96A96,96 0 0 1 96,0Z" />
+    <path
+        android:fillColor="#FF5A5858"
+        android:pathData="M320,224V352H192V224H320Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M384,416H128V96H384V416ZM320,160H192V352H320V160Z" />
+</vector>

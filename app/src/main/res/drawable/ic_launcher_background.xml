@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  自适应图标的背景层：以中心微亮的径向渐变代替纯 #080808 的死板底。
+  启动器会按自己的形状裁切，铺满 108×108 就不会出现边缘缝。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:centerX="0.5"
+        android:centerY="0.45"
+        android:endColor="#FF050505"
+        android:gradientRadius="82dp"
+        android:startColor="#FF1A1A1A"
+        android:type="radial" />
+</shape>

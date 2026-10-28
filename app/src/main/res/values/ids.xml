@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 连接页里几个要被测试/代码稳定拿到的 view（不靠 view 树下标或"第几个 TextView"）。 -->
+    <item name="setup_page" type="id" />
+    <item name="setup_input" type="id" />
+    <item name="setup_field" type="id" />
+    <item name="setup_status" type="id" />
+    <item name="setup_list" type="id" />
+    <item name="setup_undo" type="id" />
+    <item name="setup_copy_command" type="id" />
+    <item name="server_ball" type="id" />
+    <item name="load_bar" type="id" />
+    <item name="preview_list" type="id" />
+    <item name="preview_refresh" type="id" />
+    <item name="preview_nav" type="id" />
+    <item name="preview_back" type="id" />
+    <item name="preview_forward" type="id" />
+    <item name="preview_copy" type="id" />
+    <item name="preview_scan" type="id" />
+    <item name="preview_scroll" type="id" />
+    <item name="actions_panel" type="id" />
+</resources>

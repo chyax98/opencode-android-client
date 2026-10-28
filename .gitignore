@@ -1,0 +1,11 @@
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+.DS_Store
+.tmpdir/
+__pycache__/
+# 签名密钥：绝不能进仓库（配 CI 用的是 secret，本地签是环境变量指向文件）
+*.jks
+*.keystore

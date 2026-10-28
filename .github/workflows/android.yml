@@ -1,0 +1,67 @@
+name: Android
+
+# 跑哪些时候：main 的每次推送、所有 PR、打 v* tag（出 Release）、也能手动触发。
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write # tag 上要挂 Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: 单元测试（231 个，全在 JVM 上，不用模拟器）
+        run: ./gradlew :app:testDebugUnitTest --console=plain
+
+      - name: 正式包（R8）
+        env:
+          # 配了这四个 secret 就是真签名；没配会退回 debug 签名（build.gradle.kts 里有一行 warning）。
+          OC_CLIENT_KEYSTORE_BASE64: ${{ secrets.OC_SHELL_KEYSTORE_BASE64 }}
+          OC_CLIENT_KEYSTORE_PASSWORD: ${{ secrets.OC_SHELL_KEYSTORE_PASSWORD }}
+          OC_CLIENT_KEY_ALIAS: ${{ secrets.OC_SHELL_KEY_ALIAS }}
+          OC_CLIENT_KEY_PASSWORD: ${{ secrets.OC_SHELL_KEY_PASSWORD }}
+        run: |
+          VERSION_NAME="${GITHUB_REF_NAME#v}"
+          ./gradlew :app:assembleRelease \
+            -PversionCode=${{ github.run_number }} \
+            -PversionName="$VERSION_NAME" \
+            --console=plain
+
+      - name: 产物（APK）
+        uses: actions/upload-artifact@v4
+        with:
+          name: oc-shell-apk-${{ github.run_number }}
+          path: app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+
+      - name: 测试结果（失败时也要能看到哪条红）
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ github.run_number }}
+          path: app/build/test-results/testDebugUnitTest/*.xml
+          if-no-files-found: ignore
+
+      - name: tag 上挂 Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          APK="oc-client-${GITHUB_REF_NAME}.apk"
+          cp app/build/outputs/apk/release/app-release.apk "$APK"
+          gh release create "$GITHUB_REF_NAME" --generate-notes "$APK" \
+            || gh release upload "$GITHUB_REF_NAME" "$APK" --clobber
